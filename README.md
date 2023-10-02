@@ -1,8 +1,10 @@
-# Subscriptions Kahoot Demo
+# Workshop Demo - Kahoot Clone
 
-Demo app for GraphQL Summit 2023 "Federated Subscriptions in GraphOS" Workshop.
+Demo app for [GraphQL Summit 2023](https://summit.graphql.com/) "Federated Subscriptions in GraphOS" Workshop.
 
 In this Kahoot clone, you can join quizzes, answer questions and check the leaderboard to see who's winning!
+
+Try it out ▶️ https://demo-kahoot-clone.netlify.app/.
 
 ## To run locally
 
