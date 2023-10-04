@@ -16,10 +16,9 @@ import { setContext } from "@apollo/client/link/context";
 
 // http link for graphql operations
 const httpLink = new HttpLink({
-  //
   uri: import.meta.env.DEV
     ? "http://localhost:4000"
-    : import.meta.env.KAHOOT_CLONE_API_URL,
+    : "https://demo-kahoot-router-680fedf88eaf.herokuapp.com/",
 });
 
 const authLink = setContext((_, { headers }) => {
