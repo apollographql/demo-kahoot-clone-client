@@ -8,7 +8,7 @@ Try it out ▶️ https://demo-kahoot-clone.netlify.app/.
 
 ## To run locally
 
-This app requires a GraphQL endpoint running at http://localhost:4000. [See the server repo for details (link coming soon)](TODO-LINK-COMING-SOON).
+This app requires a GraphQL endpoint running at http://localhost:4000. See the [server repo](https://github.com/apollographql/demo-kahoot-clone-supergraph) for details.
 
 1. Clone the repo.
 
