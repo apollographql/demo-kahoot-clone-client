@@ -29,9 +29,22 @@ export default function MainPage() {
       <br />
       <Text>Here are some quick links for your reference:</Text>
       <UnorderedList>
-        <ListItem>Slides</ListItem>
-        <ListItem>GitHub repo - client</ListItem>
-        <ListItem>GitHub repo - server</ListItem>
+        <ListItem>
+          <Link
+            href="https://github.com/apollographql/demo-kahoot-clone-client"
+            isExternal
+          >
+            GitHub repo - client
+          </Link>
+        </ListItem>
+        <ListItem>
+          <Link
+            href="https://github.com/apollographql/demo-kahoot-clone-supergraph"
+            isExternal
+          >
+            GitHub repo - supergraph
+          </Link>
+        </ListItem>
       </UnorderedList>
       <br />
       <Button colorScheme="orange">
