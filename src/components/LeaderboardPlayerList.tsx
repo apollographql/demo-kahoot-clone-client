@@ -1,7 +1,13 @@
 import { Card, CardBody, Flex, Stack, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 
-function PlayerItem(props) {
+type PlayerItemProps = {
+  rank: number;
+  name: string;
+  points: number;
+};
+
+function PlayerItem(props: PlayerItemProps) {
   const { rank, name, points } = props;
 
   const loggedInUser = localStorage.getItem("playername");
@@ -27,7 +33,15 @@ function PlayerItem(props) {
   );
 }
 
-export default function LeaderboardPlayerList({ players, subscribeToUpdates }) {
+type LeaderboardPlayerListProps = {
+  players: Array<PlayerItemProps & { id: string }>;
+  subscribeToUpdates: () => void;
+};
+
+export default function LeaderboardPlayerList({
+  players,
+  subscribeToUpdates,
+}: LeaderboardPlayerListProps) {
   useEffect(() => {
     subscribeToUpdates();
   }, []);

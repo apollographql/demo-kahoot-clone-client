@@ -8,7 +8,11 @@ import {
 
 import { Link } from "react-router-dom";
 
-export default function QuizHeader({ quizId }) {
+type QuizHeaderProps = {
+  quizId: string;
+};
+
+export default function QuizHeader({ quizId }: QuizHeaderProps) {
   return (
     <Flex
       alignItems="center"

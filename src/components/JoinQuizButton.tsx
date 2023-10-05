@@ -12,7 +12,15 @@ const JOIN_QUIZ_MUTATION = gql`
   }
 `;
 
-export default function JoinQuizButton({ selectedQuiz, username }) {
+type JoinQuizButtonProps = {
+  selectedQuiz: string | undefined;
+  username: string;
+};
+
+export default function JoinQuizButton({
+  selectedQuiz,
+  username,
+}: JoinQuizButtonProps) {
   const navigate = useNavigate();
 
   const [joinQuizMutation, { loading: mutationLoading }] =

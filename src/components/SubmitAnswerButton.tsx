@@ -11,6 +11,16 @@ const ANSWER_QUESTION_MUTATION = gql`
     }
   }
 `;
+
+type SubmitAnswerButtonProps = {
+  selectedAnswer: string;
+  quizId: string;
+  questionId: string;
+  correctAnswer: string | null;
+  setIsChoicesDisabled: React.Dispatch<React.SetStateAction<boolean>>;
+  setCorrectAnswer: React.Dispatch<React.SetStateAction<string | null>>;
+};
+
 export default function SubmitAnswerButton({
   selectedAnswer,
   quizId,
@@ -18,7 +28,7 @@ export default function SubmitAnswerButton({
   correctAnswer,
   setIsChoicesDisabled,
   setCorrectAnswer,
-}) {
+}: SubmitAnswerButtonProps) {
   const [answerQuestionMutation, { loading, error }] = useMutation(
     ANSWER_QUESTION_MUTATION,
   );
@@ -45,7 +55,7 @@ export default function SubmitAnswerButton({
     <Button
       size="lg"
       colorScheme="orange"
-      isDisabled={!selectedAnswer || loading || correctAnswer}
+      isDisabled={Boolean(!selectedAnswer || loading || correctAnswer)}
       isLoading={loading}
       loadingText={"Submitting"}
       onClick={handleSubmit}

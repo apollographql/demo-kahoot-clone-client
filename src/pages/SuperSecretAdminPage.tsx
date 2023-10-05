@@ -53,7 +53,15 @@ const PLAYERS_FOR_QUIZ_QUERY = gql`
   }
 `;
 
-function NextQuestionButton({ setCurrentQuestion, selectedQuizId }) {
+type NextQuestionButtonProps = {
+  setCurrentQuestion: (question: string) => void;
+  selectedQuizId: string;
+};
+
+function NextQuestionButton({
+  setCurrentQuestion,
+  selectedQuizId,
+}: NextQuestionButtonProps) {
   const [showNextQuestion] = useMutation(NEXT_QUESTION_MUTATION, {
     variables: { quizId: selectedQuizId },
     onCompleted: (data) => {
@@ -81,13 +89,19 @@ function NextQuestionButton({ setCurrentQuestion, selectedQuizId }) {
   );
 }
 
-function SelectQuiz({ setSelectedQuizId }) {
-  const { loading, data, error } = useQuery(ALL_QUIZZES_QUERY);
+type SelectQuizProps = {
+  setSelectedQuizId: (quizId: string) => void;
+};
+
+function SelectQuiz({ setSelectedQuizId }: SelectQuizProps) {
+  const { loading, data, error } = useQuery<{
+    allQuizzes: Array<{ id: string; title: string }>;
+  }>(ALL_QUIZZES_QUERY);
 
   if (loading) return "Loading";
   if (error) return `Error: ${error.message}`;
 
-  const { allQuizzes } = data;
+  const { allQuizzes } = data!;
 
   return (
     <Select
@@ -105,7 +119,12 @@ function SelectQuiz({ setSelectedQuizId }) {
   );
 }
 
-function PlayerList({ players, subscribeToUpdates }) {
+type PlayerListProps = {
+  players: Array<{ name: string }>;
+  subscribeToUpdates: () => void;
+};
+
+function PlayerList({ players, subscribeToUpdates }: PlayerListProps) {
   useEffect(() => {
     subscribeToUpdates();
   }, []);
@@ -125,18 +144,25 @@ function PlayerList({ players, subscribeToUpdates }) {
   );
 }
 
-function PlayersForQuiz({ quizId }) {
-  const { loading, error, data, subscribeToMore } = useQuery(
-    PLAYERS_FOR_QUIZ_QUERY,
-    {
-      variables: { quizId: quizId },
-    },
-  );
+type PlayerForQuizProps = {
+  quizId: string;
+};
+
+function PlayersForQuiz({ quizId }: PlayerForQuizProps) {
+  const { loading, error, data, subscribeToMore } = useQuery<{
+    playersForAQuiz: Array<{
+      id: string;
+      name: string;
+      points: number;
+    }>;
+  }>(PLAYERS_FOR_QUIZ_QUERY, {
+    variables: { quizId: quizId },
+  });
 
   if (loading) return "Loading";
   if (error) return `Error: ${error.message}`;
 
-  const players = data.playersForAQuiz;
+  const players = data!.playersForAQuiz;
   const username = localStorage.getItem("playername") || "N/A";
 
   return (
@@ -166,8 +192,8 @@ function PlayersForQuiz({ quizId }) {
 }
 
 export default function SuperSecretAdminPage() {
-  const [selectedQuizId, setSelectedQuizId] = useState(null);
-  const [currentQuestion, setCurrentQuestion] = useState(null);
+  const [selectedQuizId, setSelectedQuizId] = useState<string | null>(null);
+  const [currentQuestion, setCurrentQuestion] = useState<string | null>(null);
 
   return (
     <Container

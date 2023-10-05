@@ -23,12 +23,14 @@ const QUESTION_SUBSCRIPTION = gql`
 `;
 
 export default function Quiz() {
-  const { quizId } = useParams();
+  const { quizId } = useParams<{
+    quizId: string;
+  }>();
   const navigate = useNavigate();
 
   const [isChoicesDisabled, setIsChoicesDisabled] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState("");
-  const [correctAnswer, setCorrectAnswer] = useState(null);
+  const [correctAnswer, setCorrectAnswer] = useState<string | null>(null);
 
   // WORKSHOP - FILL IN?
   const { data, loading, error } = useSubscription(QUESTION_SUBSCRIPTION, {
@@ -70,7 +72,7 @@ export default function Quiz() {
       bgColor="brand.ocean"
       borderRadius="lg"
     >
-      <QuizHeader quizId={quizId} />
+      <QuizHeader quizId={quizId!} />
       <Stack px={[4, 8, 16]}>
         <Text
           fontSize={["xl", "3xl"]}
@@ -90,7 +92,7 @@ export default function Quiz() {
         <SubmitAnswerButton
           selectedAnswer={selectedAnswer}
           correctAnswer={correctAnswer}
-          quizId={quizId}
+          quizId={quizId!}
           questionId={question.id}
           setIsChoicesDisabled={setIsChoicesDisabled}
           setCorrectAnswer={setCorrectAnswer}
