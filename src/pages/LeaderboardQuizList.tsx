@@ -12,7 +12,9 @@ const GET_ALL_QUIZZES = gql`
 `;
 
 export default function Leaderboard() {
-  const { loading, error, data } = useQuery(GET_ALL_QUIZZES);
+  const { loading, error, data } = useQuery<{
+    allQuizzes: Array<{ id: string; title: string }>;
+  }>(GET_ALL_QUIZZES);
 
   if (loading) {
     return <div>Loading</div>;
@@ -32,7 +34,7 @@ export default function Leaderboard() {
       borderRadius="lg"
     >
       <Stack>
-        {data.allQuizzes.map((q) => (
+        {data!.allQuizzes.map((q) => (
           <Link to={q.id}>
             <Button>{q.title}</Button>
           </Link>

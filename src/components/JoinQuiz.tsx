@@ -13,6 +13,7 @@ import {
   Text,
   useRadio,
   useRadioGroup,
+  UseRadioProps,
 } from "@chakra-ui/react";
 import JoinQuizButton from "./JoinQuizButton";
 
@@ -25,7 +26,9 @@ const GET_ALL_QUIZZES = gql`
   }
 `;
 
-function QuizCard(props) {
+type QuizCardProps = React.PropsWithChildren<UseRadioProps>;
+
+function QuizCard(props: QuizCardProps) {
   const { getInputProps, getRadioProps } = useRadio(props);
 
   const input = getInputProps();
@@ -54,10 +57,14 @@ function QuizCard(props) {
 }
 
 export default function JoinQuiz() {
-  const [selectedQuiz, setSelectedQuiz] = useState(undefined);
-  const [username, setUsername] = useState(generateUsername());
+  const [selectedQuiz, setSelectedQuiz] = useState<string | undefined>(
+    undefined,
+  );
+  const [username, setUsername] = useState<string>(generateUsername());
 
-  const { loading, error, data } = useQuery(GET_ALL_QUIZZES);
+  const { loading, error, data } = useQuery<{
+    allQuizzes: { id: string; title: string }[];
+  }>(GET_ALL_QUIZZES);
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     onChange: (q) => setSelectedQuiz(q),
@@ -68,7 +75,7 @@ export default function JoinQuiz() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
 
-  const { allQuizzes } = data;
+  const { allQuizzes } = data!;
 
   return (
     <Container

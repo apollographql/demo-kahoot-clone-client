@@ -1,7 +1,13 @@
-import { Box, Flex, useRadio, Icon } from "@chakra-ui/react";
+import { Box, Flex, useRadio, Icon, UseRadioProps } from "@chakra-ui/react";
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 
-export default function QuizChoiceCard(props) {
+type QuizChoiceCardProps = UseRadioProps & {
+  isCorrectAnswer: boolean;
+  showCorrectAnswer: boolean;
+  text: string;
+};
+
+export default function QuizChoiceCard(props: QuizChoiceCardProps) {
   const { getInputProps, getRadioProps } = useRadio(props);
 
   const input = getInputProps();

@@ -88,11 +88,12 @@ export default function LeaderboardForQuiz() {
               variables: { quizIdVariable: quizId },
               updateQuery: (prev, { subscriptionData }) => {
                 if (!subscriptionData.data) return prev;
-                return Object.assign({}, prev, {
+                return {
+                  ...prev,
                   leaderboardForQuiz: {
                     list: subscriptionData.data.leaderboardForQuiz.list,
                   },
-                });
+                };
               },
               onError: (e) => {
                 console.log(e);
