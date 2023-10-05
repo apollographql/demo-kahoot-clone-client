@@ -1,5 +1,5 @@
 import { Card, CardBody, Flex, Stack, Text } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 type PlayerItemProps = {
   rank: number;
@@ -46,14 +46,26 @@ export default function LeaderboardPlayerList({
     subscribeToUpdates();
   }, []);
 
+  const rankedPlayers = useMemo(() => {
+    let rank = 1;
+    let previousPoints = 0;
+    return players.map((player, index) => {
+      if (index > 0 && player.points < previousPoints) {
+        rank = index + 1;
+      }
+      previousPoints = player.points;
+      return { ...player, rank };
+    });
+  }, [players]);
+
   if (players.length == 0) {
     return "Nothing to show yet";
   }
 
   return (
     <Stack spacing={2}>
-      {players.map((player, index) => (
-        <PlayerItem {...player} rank={index + 1} key={player.id} />
+      {rankedPlayers.map((player) => (
+        <PlayerItem {...player} rank={player.rank} key={player.id} />
       ))}
     </Stack>
   );
